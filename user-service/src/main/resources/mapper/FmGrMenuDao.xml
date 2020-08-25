@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.user.dao.FmGrMenuDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.user.client.domain.FmGrMenuDO" id="fmGrMenuMap">
+                    <result property="id" column="id"/>
+                    <result property="menuId" column="menu_id"/>
+                    <result property="menuName" column="menu_name"/>
+                    <result property="url" column="url"/>
+                    <result property="icon" column="icon"/>
+                    <result property="parentId" column="parent_id"/>
+                    <result property="level" column="level"/>
+                    <result property="createTime" column="create_time"/>
+                    <result property="updateTime" column="update_time"/>
+            </resultMap>
+
+    <sql id="base_column_list">
+                id,                menu_id,                menu_name,                url,                icon,                parent_id,                level,                create_time,                update_time        
+    </sql>
+
+    <sql id="base_where">
+        <trim prefix="where" prefixOverrides="and|or">
+                            <if test="id != null">AND id = #{id}</if>
+                            <if test="menuId != null">AND menu_id = #{menuId}</if>
+                            <if test="menuName != null">AND menu_name = #{menuName}</if>
+                            <if test="url != null">AND url = #{url}</if>
+                            <if test="icon != null">AND icon = #{icon}</if>
+                            <if test="parentId != null">AND parent_id = #{parentId}</if>
+                            <if test="level != null">AND level = #{level}</if>
+                            <if test="createTime != null">AND create_time = #{createTime}</if>
+                            <if test="updateTime != null">AND update_time = #{updateTime}</if>
+                    </trim>
+    </sql>
+
+
+    <select id="queryObject" resultMap="fmGrMenuMap">
+        select
+        <include refid="base_column_list"/>
+        from fm_gr_menu where id = #{value}
+    </select>
+
+    <select id="queryList" resultMap="fmGrMenuMap"
+            parameterType="com.user.client.query.FmGrMenuQueryDO">
+        select
+        <include refid="base_column_list"/>
+        from fm_gr_menu
+        <include refid="base_where"/>
+        <if test="firstRow != null">
+            limit #{firstRow},#{pageSize}
+        </if>
+    </select>
+
+    <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrMenuQueryDO">
+        select count(*) from fm_gr_menu
+        <include refid="base_where"/>
+    </select>
+
+    <insert id="save" parameterType="com.user.client.domain.FmGrMenuDO"            useGeneratedKeys="true" keyProperty="id">
+        insert into fm_gr_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                                                                            <if test="menuId != null">menu_id,</if>
+                                                                <if test="menuName != null">menu_name,</if>
+                                                                <if test="url != null">url,</if>
+                                                                <if test="icon != null">icon,</if>
+                                                                <if test="parentId != null">parent_id,</if>
+                                                                <if test="level != null">level,</if>
+                                                                <if test="createTime != null">create_time,</if>
+                                                                <if test="updateTime != null">update_time,</if>
+                                    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                                                                            <if test="menuId != null">#{menuId},</if>
+                                                                <if test="menuName != null">#{menuName},</if>
+                                                                <if test="url != null">#{url},</if>
+                                                                <if test="icon != null">#{icon},</if>
+                                                                <if test="parentId != null">#{parentId},</if>
+                                                                <if test="level != null">#{level},</if>
+                                                                <if test="createTime != null">#{createTime},</if>
+                                                                <if test="updateTime != null">#{updateTime},</if>
+                                    </trim>
+    </insert>
+    <insert id="batchSave" parameterType="com.user.client.domain.FmGrMenuDO"            useGeneratedKeys="true" keyProperty="id">
+        insert into fm_gr_menu
+        (
+                                                        menu_id ,                                                menu_name ,                                                url ,                                                icon ,                                                parent_id ,                                                level ,                                                create_time ,                                                update_time                             )
+        values
+        <foreach collection="list" index="index" separator="," item="item">
+            (
+                                                                            #{item.menuId},                                                                #{item.menuName},                                                                #{item.url},                                                                #{item.icon},                                                                #{item.parentId},                                                                #{item.level},                                                                #{item.createTime},                                                                #{item.updateTime}                                        )
+        </foreach>
+    </insert>
+    <update id="update" parameterType="com.user.client.domain.FmGrMenuDO">
+        update fm_gr_menu
+        <set>
+                                                                            <if test="menuId != null">
+                        `menu_id` = #{menuId},
+                    </if>
+                                                                <if test="menuName != null">
+                        `menu_name` = #{menuName},
+                    </if>
+                                                                <if test="url != null">
+                        `url` = #{url},
+                    </if>
+                                                                <if test="icon != null">
+                        `icon` = #{icon},
+                    </if>
+                                                                <if test="parentId != null">
+                        `parent_id` = #{parentId},
+                    </if>
+                                                                <if test="level != null">
+                        `level` = #{level},
+                    </if>
+                                                                <if test="createTime != null">
+                        `create_time` = #{createTime},
+                    </if>
+                                                                <if test="updateTime != null">
+                        `update_time` = #{updateTime},
+                    </if>
+                                    </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from fm_gr_menu where id = #{id}
+	</delete>
+
+</mapper>

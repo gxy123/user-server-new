@@ -1,0 +1,42 @@
+server:
+  tomcat:
+    max-threads: 3000
+    min-spare-threads: 10
+  port: 3040
+spring:
+  application:
+    name: user-api
+  datasource: #以下数据库部分自行修改
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost/fm_user_center?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password:
+    dbcp2:
+      max-idle: 10
+      max-wait-millis: 10000
+      min-idle: 5
+      initial-size: 5
+      validation-query: select 1
+      test-on-borrow: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 18800
+  transaction:
+    rollback-on-commit-failure: true
+  redis: #以下redis部分自行修改
+    host: host
+    port: 6379
+    #       password: dh35hebsd87ed9df9d0kemd9
+    lettuce:
+      pool:
+        min-idle: 4
+        max-active: 8
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+mybatis:
+  mapperLocations: classpath:mapper/**/*.xml

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.user.dao.FmGrUserRDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.user.client.domain.FmGrUserRDO" id="fmGrUserRMap">
+                    <result property="id" column="id"/>
+                    <result property="userRoleId" column="user_role_id"/>
+                    <result property="userId" column="user_id"/>
+                    <result property="roleId" column="role_id"/>
+                    <result property="createTime" column="create_time"/>
+                    <result property="updateTime" column="update_time"/>
+            </resultMap>
+
+    <sql id="base_column_list">
+                id,                user_role_id,                user_id,                role_id,                create_time,                update_time        
+    </sql>
+
+    <sql id="base_where">
+        <trim prefix="where" prefixOverrides="and|or">
+                            <if test="id != null">AND id = #{id}</if>
+                            <if test="userRoleId != null">AND user_role_id = #{userRoleId}</if>
+                            <if test="userId != null">AND user_id = #{userId}</if>
+                            <if test="roleId != null">AND role_id = #{roleId}</if>
+                            <if test="createTime != null">AND create_time = #{createTime}</if>
+                            <if test="updateTime != null">AND update_time = #{updateTime}</if>
+                    </trim>
+    </sql>
+
+
+    <select id="queryObject" resultMap="fmGrUserRMap">
+        select
+        <include refid="base_column_list"/>
+        from fm_gr_user_r where id = #{value}
+    </select>
+
+    <select id="queryList" resultMap="fmGrUserRMap"
+            parameterType="com.user.client.query.FmGrUserRQueryDO">
+        select
+        <include refid="base_column_list"/>
+        from fm_gr_user_r
+        <include refid="base_where"/>
+        <if test="firstRow != null">
+            limit #{firstRow},#{pageSize}
+        </if>
+    </select>
+
+    <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrUserRQueryDO">
+        select count(*) from fm_gr_user_r
+        <include refid="base_where"/>
+    </select>
+
+    <insert id="save" parameterType="com.user.client.domain.FmGrUserRDO">
+        insert into fm_gr_user_r
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                                                <if test="id != null">id,</if>
+                                                                <if test="userRoleId != null">user_role_id,</if>
+                                                                <if test="userId != null">user_id,</if>
+                                                                <if test="roleId != null">role_id,</if>
+                                                                <if test="createTime != null">create_time,</if>
+                                                                <if test="updateTime != null">update_time,</if>
+                                    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                                                <if test="id != null">#{id},</if>
+                                                                <if test="userRoleId != null">#{userRoleId},</if>
+                                                                <if test="userId != null">#{userId},</if>
+                                                                <if test="roleId != null">#{roleId},</if>
+                                                                <if test="createTime != null">#{createTime},</if>
+                                                                <if test="updateTime != null">#{updateTime},</if>
+                                    </trim>
+    </insert>
+    <insert id="batchSave" parameterType="com.user.client.domain.FmGrUserRDO">
+        insert into fm_gr_user_r
+        (
+                                    id ,                                                user_role_id ,                                                user_id ,                                                role_id ,                                                create_time ,                                                update_time                             )
+        values
+        <foreach collection="list" index="index" separator="," item="item">
+            (
+                                                #{item.id},                                                                #{item.userRoleId},                                                                #{item.userId},                                                                #{item.roleId},                                                                #{item.createTime},                                                                #{item.updateTime}                                        )
+        </foreach>
+    </insert>
+    <update id="update" parameterType="com.user.client.domain.FmGrUserRDO">
+        update fm_gr_user_r
+        <set>
+                                                                            <if test="userRoleId != null">
+                        `user_role_id` = #{userRoleId},
+                    </if>
+                                                                <if test="userId != null">
+                        `user_id` = #{userId},
+                    </if>
+                                                                <if test="roleId != null">
+                        `role_id` = #{roleId},
+                    </if>
+                                                                <if test="createTime != null">
+                        `create_time` = #{createTime},
+                    </if>
+                                                                <if test="updateTime != null">
+                        `update_time` = #{updateTime},
+                    </if>
+                                    </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from fm_gr_user_r where id = #{id}
+	</delete>
+
+</mapper>

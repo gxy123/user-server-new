@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.user.dao.FmGrMenuBtnDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.user.client.domain.FmGrMenuBtnDO" id="fmGrMenuBtnMap">
+                    <result property="id" column="id"/>
+                    <result property="btnId" column="btn_id"/>
+                    <result property="btnName" column="btn_name"/>
+                    <result property="icon" column="icon"/>
+                    <result property="menuId" column="menu_id"/>
+                    <result property="createTime" column="create_time"/>
+                    <result property="updateTime" column="update_time"/>
+            </resultMap>
+
+    <sql id="base_column_list">
+                id,                btn_id,                btn_name,                icon,                menu_id,                create_time,                update_time        
+    </sql>
+
+    <sql id="base_where">
+        <trim prefix="where" prefixOverrides="and|or">
+                            <if test="id != null">AND id = #{id}</if>
+                            <if test="btnId != null">AND btn_id = #{btnId}</if>
+                            <if test="btnName != null">AND btn_name = #{btnName}</if>
+                            <if test="icon != null">AND icon = #{icon}</if>
+                            <if test="menuId != null">AND menu_id = #{menuId}</if>
+                            <if test="createTime != null">AND create_time = #{createTime}</if>
+                            <if test="updateTime != null">AND update_time = #{updateTime}</if>
+                    </trim>
+    </sql>
+
+
+    <select id="queryObject" resultMap="fmGrMenuBtnMap">
+        select
+        <include refid="base_column_list"/>
+        from fm_gr_menu_btn where id = #{value}
+    </select>
+
+    <select id="queryList" resultMap="fmGrMenuBtnMap"
+            parameterType="com.user.client.query.FmGrMenuBtnQueryDO">
+        select
+        <include refid="base_column_list"/>
+        from fm_gr_menu_btn
+        <include refid="base_where"/>
+        <if test="firstRow != null">
+            limit #{firstRow},#{pageSize}
+        </if>
+    </select>
+
+    <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrMenuBtnQueryDO">
+        select count(*) from fm_gr_menu_btn
+        <include refid="base_where"/>
+    </select>
+
+    <insert id="save" parameterType="com.user.client.domain.FmGrMenuBtnDO"            useGeneratedKeys="true" keyProperty="id">
+        insert into fm_gr_menu_btn
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                                                                            <if test="btnId != null">btn_id,</if>
+                                                                <if test="btnName != null">btn_name,</if>
+                                                                <if test="icon != null">icon,</if>
+                                                                <if test="menuId != null">menu_id,</if>
+                                                                <if test="createTime != null">create_time,</if>
+                                                                <if test="updateTime != null">update_time,</if>
+                                    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                                                                            <if test="btnId != null">#{btnId},</if>
+                                                                <if test="btnName != null">#{btnName},</if>
+                                                                <if test="icon != null">#{icon},</if>
+                                                                <if test="menuId != null">#{menuId},</if>
+                                                                <if test="createTime != null">#{createTime},</if>
+                                                                <if test="updateTime != null">#{updateTime},</if>
+                                    </trim>
+    </insert>
+    <insert id="batchSave" parameterType="com.user.client.domain.FmGrMenuBtnDO"            useGeneratedKeys="true" keyProperty="id">
+        insert into fm_gr_menu_btn
+        (
+                                                        btn_id ,                                                btn_name ,                                                icon ,                                                menu_id ,                                                create_time ,                                                update_time                             )
+        values
+        <foreach collection="list" index="index" separator="," item="item">
+            (
+                                                                            #{item.btnId},                                                                #{item.btnName},                                                                #{item.icon},                                                                #{item.menuId},                                                                #{item.createTime},                                                                #{item.updateTime}                                        )
+        </foreach>
+    </insert>
+    <update id="update" parameterType="com.user.client.domain.FmGrMenuBtnDO">
+        update fm_gr_menu_btn
+        <set>
+                                                                            <if test="btnId != null">
+                        `btn_id` = #{btnId},
+                    </if>
+                                                                <if test="btnName != null">
+                        `btn_name` = #{btnName},
+                    </if>
+                                                                <if test="icon != null">
+                        `icon` = #{icon},
+                    </if>
+                                                                <if test="menuId != null">
+                        `menu_id` = #{menuId},
+                    </if>
+                                                                <if test="createTime != null">
+                        `create_time` = #{createTime},
+                    </if>
+                                                                <if test="updateTime != null">
+                        `update_time` = #{updateTime},
+                    </if>
+                                    </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from fm_gr_menu_btn where id = #{id}
+	</delete>
+
+</mapper>

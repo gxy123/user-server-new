@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.user.dao.FmGrRoleMDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.user.client.domain.FmGrRoleMDO" id="fmGrRoleMMap">
+                    <result property="id" column="id"/>
+                    <result property="roleMenuId" column="role_menu_id"/>
+                    <result property="roleId" column="role_id"/>
+                    <result property="menuId" column="menu_id"/>
+                    <result property="parentId" column="parent_id"/>
+                    <result property="btnId" column="btn_id"/>
+            </resultMap>
+
+    <sql id="base_column_list">
+                id,                role_menu_id,                role_id,                menu_id,                parent_id,                btn_id        
+    </sql>
+
+    <sql id="base_where">
+        <trim prefix="where" prefixOverrides="and|or">
+                            <if test="id != null">AND id = #{id}</if>
+                            <if test="roleMenuId != null">AND role_menu_id = #{roleMenuId}</if>
+                            <if test="roleId != null">AND role_id = #{roleId}</if>
+                            <if test="menuId != null">AND menu_id = #{menuId}</if>
+                            <if test="parentId != null">AND parent_id = #{parentId}</if>
+                            <if test="btnId != null">AND btn_id = #{btnId}</if>
+                    </trim>
+    </sql>
+
+
+    <select id="queryObject" resultMap="fmGrRoleMMap">
+        select
+        <include refid="base_column_list"/>
+        from fm_gr_role_m where id = #{value}
+    </select>
+
+    <select id="queryList" resultMap="fmGrRoleMMap"
+            parameterType="com.user.client.query.FmGrRoleMQueryDO">
+        select
+        <include refid="base_column_list"/>
+        from fm_gr_role_m
+        <include refid="base_where"/>
+        <if test="firstRow != null">
+            limit #{firstRow},#{pageSize}
+        </if>
+    </select>
+
+    <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrRoleMQueryDO">
+        select count(*) from fm_gr_role_m
+        <include refid="base_where"/>
+    </select>
+
+    <insert id="save" parameterType="com.user.client.domain.FmGrRoleMDO">
+        insert into fm_gr_role_m
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                                                <if test="id != null">id,</if>
+                                                                <if test="roleMenuId != null">role_menu_id,</if>
+                                                                <if test="roleId != null">role_id,</if>
+                                                                <if test="menuId != null">menu_id,</if>
+                                                                <if test="parentId != null">parent_id,</if>
+                                                                <if test="btnId != null">btn_id,</if>
+                                    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                                                <if test="id != null">#{id},</if>
+                                                                <if test="roleMenuId != null">#{roleMenuId},</if>
+                                                                <if test="roleId != null">#{roleId},</if>
+                                                                <if test="menuId != null">#{menuId},</if>
+                                                                <if test="parentId != null">#{parentId},</if>
+                                                                <if test="btnId != null">#{btnId},</if>
+                                    </trim>
+    </insert>
+    <insert id="batchSave" parameterType="com.user.client.domain.FmGrRoleMDO">
+        insert into fm_gr_role_m
+        (
+                                    id ,                                                role_menu_id ,                                                role_id ,                                                menu_id ,                                                parent_id ,                                                btn_id                             )
+        values
+        <foreach collection="list" index="index" separator="," item="item">
+            (
+                                                #{item.id},                                                                #{item.roleMenuId},                                                                #{item.roleId},                                                                #{item.menuId},                                                                #{item.parentId},                                                                #{item.btnId}                                        )
+        </foreach>
+    </insert>
+    <update id="update" parameterType="com.user.client.domain.FmGrRoleMDO">
+        update fm_gr_role_m
+        <set>
+                                                                            <if test="roleMenuId != null">
+                        `role_menu_id` = #{roleMenuId},
+                    </if>
+                                                                <if test="roleId != null">
+                        `role_id` = #{roleId},
+                    </if>
+                                                                <if test="menuId != null">
+                        `menu_id` = #{menuId},
+                    </if>
+                                                                <if test="parentId != null">
+                        `parent_id` = #{parentId},
+                    </if>
+                                                                <if test="btnId != null">
+                        `btn_id` = #{btnId},
+                    </if>
+                                    </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from fm_gr_role_m where id = #{id}
+	</delete>
+
+</mapper>

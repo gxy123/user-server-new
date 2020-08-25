@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.user.dao.FmGrAcbDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.user.client.domain.FmGrAcbDO" id="fmGrAcbMap">
+                    <result property="id" column="id"/>
+                    <result property="actionMapId" column="action_map_id"/>
+                    <result property="actionId" column="action_id"/>
+                    <result property="btnId" column="btn_id"/>
+                    <result property="menuId" column="menu_id"/>
+            </resultMap>
+
+    <sql id="base_column_list">
+                id,                action_map_id,                action_id,                btn_id,                menu_id        
+    </sql>
+
+    <sql id="base_where">
+        <trim prefix="where" prefixOverrides="and|or">
+                            <if test="id != null">AND id = #{id}</if>
+                            <if test="actionMapId != null">AND action_map_id = #{actionMapId}</if>
+                            <if test="actionId != null">AND action_id = #{actionId}</if>
+                            <if test="btnId != null">AND btn_id = #{btnId}</if>
+                            <if test="menuId != null">AND menu_id = #{menuId}</if>
+                    </trim>
+    </sql>
+
+
+    <select id="queryObject" resultMap="fmGrAcbMap">
+        select
+        <include refid="base_column_list"/>
+        from fm_gr_act_b where id = #{value}
+    </select>
+
+    <select id="queryList" resultMap="fmGrAcbMap"
+            parameterType="com.user.client.query.FmGrAcbQueryDO">
+        select
+        <include refid="base_column_list"/>
+        from fm_gr_act_b
+        <include refid="base_where"/>
+        <if test="firstRow != null">
+            limit #{firstRow},#{pageSize}
+        </if>
+    </select>
+
+    <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrAcbQueryDO">
+        select count(*) from fm_gr_act_b
+        <include refid="base_where"/>
+    </select>
+
+    <insert id="save" parameterType="com.user.client.domain.FmGrAcbDO">
+        insert into fm_gr_act_b
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                                                <if test="id != null">id,</if>
+                                                                <if test="actionMapId != null">action_map_id,</if>
+                                                                <if test="actionId != null">action_id,</if>
+                                                                <if test="btnId != null">btn_id,</if>
+                                                                <if test="menuId != null">menu_id,</if>
+                                    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                                                <if test="id != null">#{id},</if>
+                                                                <if test="actionMapId != null">#{actionMapId},</if>
+                                                                <if test="actionId != null">#{actionId},</if>
+                                                                <if test="btnId != null">#{btnId},</if>
+                                                                <if test="menuId != null">#{menuId},</if>
+                                    </trim>
+    </insert>
+    <insert id="batchSave" parameterType="com.user.client.domain.FmGrAcbDO">
+        insert into fm_gr_act_b
+        (
+                                    id ,                                                action_map_id ,                                                action_id ,                                                btn_id ,                                                menu_id                             )
+        values
+        <foreach collection="list" index="index" separator="," item="item">
+            (
+                                                #{item.id},                                                                #{item.actionMapId},                                                                #{item.actionId},                                                                #{item.btnId},                                                                #{item.menuId}                                        )
+        </foreach>
+    </insert>
+    <update id="update" parameterType="com.user.client.domain.FmGrAcbDO">
+        update fm_gr_act_b
+        <set>
+                                                                            <if test="actionMapId != null">
+                        `action_map_id` = #{actionMapId},
+                    </if>
+                                                                <if test="actionId != null">
+                        `action_id` = #{actionId},
+                    </if>
+                                                                <if test="btnId != null">
+                        `btn_id` = #{btnId},
+                    </if>
+                                                                <if test="menuId != null">
+                        `menu_id` = #{menuId},
+                    </if>
+                                    </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from fm_gr_act_b where id = #{id}
+	</delete>
+
+</mapper>
