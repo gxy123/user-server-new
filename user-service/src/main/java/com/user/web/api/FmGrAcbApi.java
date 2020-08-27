@@ -1,6 +1,7 @@
 package com.user.web.api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +48,12 @@ public class FmGrAcbApi extends BaseControllerImpl<FmGrAcbDO, FmGrAcbQueryDO> {
         CommonResult<Integer> count = getService().count(q);
         query.setTotal(count.getResult());
         return query;
+    }
+    @ApiOperation(value = "通用查询逻辑", httpMethod = "GET", notes = "通用查询逻辑")
+    @RequestMapping("user")
+    public CommonResult<Authentication> getUser( Authentication q) {
+
+        return CommonResult.successReturn(q);
     }
 
     /**

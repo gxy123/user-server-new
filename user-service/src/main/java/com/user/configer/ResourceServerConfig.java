@@ -22,7 +22,8 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
-
+    @Value("${security.oauth2.resource.id}")
+    private String resourceId;
     @Value("${security.oauth2.client.client-id}")
     private String clientId;
 
@@ -48,11 +49,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     }
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources.tokenServices(tokenService());
-    }
-    @Bean
-    public BCryptPasswordEncoder getPasswordEncoder(){
-        return new BCryptPasswordEncoder();
+        resources.tokenServices(tokenService()).resourceId(resourceId);
     }
 
 }
