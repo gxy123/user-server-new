@@ -24,13 +24,14 @@ spring:
   transaction:
     rollback-on-commit-failure: true
   redis: #以下redis部分自行修改
-    host: host
+    host: localhost
     port: 6379
     #       password: dh35hebsd87ed9df9d0kemd9
     lettuce:
       pool:
         min-idle: 4
         max-active: 8
+    database: 0
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
@@ -38,5 +39,22 @@ spring:
     multipart:
       max-file-size: 5MB
       max-request-size: 10MB
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
 mybatis:
   mapperLocations: classpath:mapper/**/*.xml
+
+security:
+  oauth2:
+    client:
+      client-id: client_1
+      client-secret: 123456
+      user-authorization-uri: http://localhost:8088/oauth/authorize
+      access-token-uri: http://localhost:8088/oauth/token
+    resource:
+      id: order
+      user-info-uri: user-info
+    authorization:
+      check-token-access: http://localhost:8088/oauth/check_token
