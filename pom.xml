@@ -188,4 +188,12 @@
             </plugins>
         </pluginManagement>
     </build>
+    <distributionManagement>
+
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>snapshots</name>
+            <url>file:C:\Users\GXY\.m2\repository</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

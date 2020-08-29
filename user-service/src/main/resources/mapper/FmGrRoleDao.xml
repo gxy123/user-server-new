@@ -5,14 +5,14 @@
 
     <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.user.client.domain.FmGrRoleDO" id="fmGrRoleMap">
-                    <result property="id" column="id"/>
-                    <result property="roleId" column="role_id"/>
-                    <result property="roleName" column="role_name"/>
-                    <result property="icon" column="icon"/>
-                    <result property="des" column="des"/>
-                    <result property="createTime" column="create_time"/>
-                    <result property="updateTime" column="update_time"/>
-            </resultMap>
+        <result property="id" column="id"/>
+        <result property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="icon" column="icon"/>
+        <result property="des" column="des"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
 
     <sql id="base_column_list">
                 id,                role_id,                role_name,                icon,                des,                create_time,                update_time        
@@ -20,14 +20,20 @@
 
     <sql id="base_where">
         <trim prefix="where" prefixOverrides="and|or">
-                            <if test="id != null">AND id = #{id}</if>
-                            <if test="roleId != null">AND role_id = #{roleId}</if>
-                            <if test="roleName != null">AND role_name = #{roleName}</if>
-                            <if test="icon != null">AND icon = #{icon}</if>
-                            <if test="des != null">AND des = #{des}</if>
-                            <if test="createTime != null">AND create_time = #{createTime}</if>
-                            <if test="updateTime != null">AND update_time = #{updateTime}</if>
-                    </trim>
+            <if test="id != null">AND id = #{id}</if>
+            <if test="roleId != null">AND role_id = #{roleId}</if>
+            <if test="roleName != null">AND role_name = #{roleName}</if>
+            <if test="icon != null">AND icon = #{icon}</if>
+            <if test="des != null">AND des = #{des}</if>
+            <if test="createTime != null">AND create_time = #{createTime}</if>
+            <if test="updateTime != null">AND update_time = #{updateTime}</if>
+            <if test="roleIds != null and roleIds.size() != 0">
+                AND role_id in
+                <foreach collection="roleIds" item="role" separator="," open="(" close=")">
+                    #{role}
+                </foreach>
+            </if>
+        </trim>
     </sql>
 
 
@@ -48,62 +54,72 @@
         </if>
     </select>
 
+    <select id="listByRoleIds" resultMap="fmGrRoleMap"
+            parameterType="com.user.client.query.ext.FmGrRoleQueryExt">
+        select
+        <include refid="base_column_list"/>
+        from fm_gr_role
+        <include refid="base_where"/>
+        <if test="firstRow != null">
+            limit #{firstRow},#{pageSize}
+        </if>
+    </select>
     <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrRoleQueryDO">
         select count(*) from fm_gr_role
         <include refid="base_where"/>
     </select>
 
-    <insert id="save" parameterType="com.user.client.domain.FmGrRoleDO"            useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="com.user.client.domain.FmGrRoleDO" useGeneratedKeys="true" keyProperty="id">
         insert into fm_gr_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
-                                                                            <if test="roleId != null">role_id,</if>
-                                                                <if test="roleName != null">role_name,</if>
-                                                                <if test="icon != null">icon,</if>
-                                                                <if test="des != null">des,</if>
-                                                                <if test="createTime != null">create_time,</if>
-                                                                <if test="updateTime != null">update_time,</if>
-                                    </trim>
+            <if test="roleId != null">role_id,</if>
+            <if test="roleName != null">role_name,</if>
+            <if test="icon != null">icon,</if>
+            <if test="des != null">des,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-                                                                            <if test="roleId != null">#{roleId},</if>
-                                                                <if test="roleName != null">#{roleName},</if>
-                                                                <if test="icon != null">#{icon},</if>
-                                                                <if test="des != null">#{des},</if>
-                                                                <if test="createTime != null">#{createTime},</if>
-                                                                <if test="updateTime != null">#{updateTime},</if>
-                                    </trim>
+            <if test="roleId != null">#{roleId},</if>
+            <if test="roleName != null">#{roleName},</if>
+            <if test="icon != null">#{icon},</if>
+            <if test="des != null">#{des},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
     </insert>
-    <insert id="batchSave" parameterType="com.user.client.domain.FmGrRoleDO"            useGeneratedKeys="true" keyProperty="id">
+    <insert id="batchSave" parameterType="com.user.client.domain.FmGrRoleDO" useGeneratedKeys="true" keyProperty="id">
         insert into fm_gr_role
         (
-                                                        role_id ,                                                role_name ,                                                icon ,                                                des ,                                                create_time ,                                                update_time                             )
+        role_id , role_name , icon , des , create_time , update_time )
         values
         <foreach collection="list" index="index" separator="," item="item">
             (
-                                                                            #{item.roleId},                                                                #{item.roleName},                                                                #{item.icon},                                                                #{item.des},                                                                #{item.createTime},                                                                #{item.updateTime}                                        )
+            #{item.roleId}, #{item.roleName}, #{item.icon}, #{item.des}, #{item.createTime}, #{item.updateTime} )
         </foreach>
     </insert>
     <update id="update" parameterType="com.user.client.domain.FmGrRoleDO">
         update fm_gr_role
         <set>
-                                                                            <if test="roleId != null">
-                        `role_id` = #{roleId},
-                    </if>
-                                                                <if test="roleName != null">
-                        `role_name` = #{roleName},
-                    </if>
-                                                                <if test="icon != null">
-                        `icon` = #{icon},
-                    </if>
-                                                                <if test="des != null">
-                        `des` = #{des},
-                    </if>
-                                                                <if test="createTime != null">
-                        `create_time` = #{createTime},
-                    </if>
-                                                                <if test="updateTime != null">
-                        `update_time` = #{updateTime},
-                    </if>
-                                    </set>
+            <if test="roleId != null">
+                `role_id` = #{roleId},
+            </if>
+            <if test="roleName != null">
+                `role_name` = #{roleName},
+            </if>
+            <if test="icon != null">
+                `icon` = #{icon},
+            </if>
+            <if test="des != null">
+                `des` = #{des},
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime},
+            </if>
+        </set>
         where id = #{id}
     </update>
 

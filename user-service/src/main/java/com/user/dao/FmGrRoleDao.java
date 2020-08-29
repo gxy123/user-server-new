@@ -4,6 +4,8 @@ import com.user.client.query.FmGrRoleQueryDO;
 import com.user.service.base.BaseDAO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 角色表
  *
@@ -13,5 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface FmGrRoleDao extends BaseDAO<FmGrRoleDO, FmGrRoleQueryDO> {
+
+    List<FmGrRoleDO> listByRoleIds(FmGrRoleQueryDO queryDO);
 
 }
