@@ -25,7 +25,7 @@ import static com.user.client.base.CommonCode.SYSTEM_ERROR;
  * @date 2020-08-25 11:39:42
  */
 @RestController
-@RequestMapping("/user/fmgruser")
+@RequestMapping("/user/auth")
 @Slf4j
 public class FmGrUserController extends BaseControllerImpl<FmGrUserDO, FmGrUserQueryDO> {
 
