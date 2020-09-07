@@ -15,5 +15,6 @@ import java.util.List;
 public interface FmGrRoleService extends BaseServiceAO<FmGrRoleDO,FmGrRoleQueryDO> {
 
     List<FmGrRoleDO>listByRoleIds(List<Long> roleIds) throws Exception;
+    List<FmGrRoleDO>listByUrl(String url) throws Exception;
 
 }
