@@ -1,5 +1,7 @@
 package com.user.client.vo;
 
+import com.user.client.domain.FmGrDeptDO;
+import com.user.client.domain.FmGrMenuDO;
 import com.user.client.domain.FmGrRoleDO;
 import com.user.client.domain.FmGrUserDO;
 import lombok.Data;
@@ -17,9 +19,12 @@ public class UserClientVo extends FmGrUserDO {
     Set<String> authorities;
     Set<String> scope;
     List<FmGrRoleDO> roleDOS;
+    List<FmGrMenuVO> menuVOS;
+    List<FmGrDeptDO>fmGrDeptDOS;
     Object jti;
     Long exp;
     String grant_type;
     Set<String> aud;
+
 
 }
