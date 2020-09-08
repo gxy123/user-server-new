@@ -1,5 +1,7 @@
 package com.user.web.controller;
+import com.user.client.domain.FmGrRoleDO;
 import com.user.client.vo.FmGrUserVO;
+import com.user.service.FmGrRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +33,8 @@ public class FmGrUserController extends BaseControllerImpl<FmGrUserDO, FmGrUserQ
 
     @Autowired
     private FmGrUserService baseService;
+    @Autowired
+    private FmGrRoleService fmGrRoleService;
 
     @Override
     public BaseServiceAO<FmGrUserDO, FmGrUserQueryDO> getService() {
@@ -109,6 +113,22 @@ public class FmGrUserController extends BaseControllerImpl<FmGrUserDO, FmGrUserQ
     public CommonResult<FmGrUserVO> detail(@RequestParam("userName") String  userName) {
         try {
             return baseService.getByUserName(userName);
+        } catch (Exception e) {
+            log.error("根据用户名获取用户信息异常，msg={}",e.getMessage());
+            e.printStackTrace();
+        }
+        return CommonResult.errorReturn(SYSTEM_ERROR);
+    }
+    /**
+     * 根据url获取包含的角色
+     * @param url
+     * @return
+     */
+    @ApiOperation(value = "根据url获取包含的角色", httpMethod = "GET", notes = "根据url获取包含的角色")
+    @RequestMapping("getRolesByUrl")
+    public CommonResult<List<FmGrRoleDO>> getRolesByUrl(@RequestParam("url") String  url) {
+        try {
+            return fmGrRoleService.listByUrl(url);
         } catch (Exception e) {
             log.error("根据用户名获取用户信息异常，msg={}",e.getMessage());
             e.printStackTrace();

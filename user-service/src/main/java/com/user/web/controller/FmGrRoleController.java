@@ -99,20 +99,5 @@ public class FmGrRoleController extends BaseControllerImpl<FmGrRoleDO, FmGrRoleQ
         return getService().save(t);
     }
 
-    /**
-     * 根据url获取包含的角色
-     * @param url
-     * @return
-     */
-    @ApiOperation(value = "根据url获取包含的角色", httpMethod = "GET", notes = "根据url获取包含的角色")
-    @RequestMapping("getRolesByUrl")
-    public CommonResult<List<FmGrRoleDO>> getRolesByUrl(@RequestParam("url") String  url) {
-        try {
-            return baseService.listByUrl(url);
-        } catch (Exception e) {
-            log.error("根据用户名获取用户信息异常，msg={}",e.getMessage());
-            e.printStackTrace();
-        }
-        return CommonResult.errorReturn(SYSTEM_ERROR);
-    }
+
 }
