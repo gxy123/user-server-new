@@ -126,7 +126,7 @@ public class FmGrUserController extends BaseControllerImpl<FmGrUserDO, FmGrUserQ
      */
     @ApiOperation(value = "根据url获取包含的角色", httpMethod = "GET", notes = "根据url获取包含的角色")
     @RequestMapping("getRolesByUrl")
-    public CommonResult<List<FmGrRoleDO>> getRolesByUrl(@RequestParam("url") String  url) {
+    public CommonResult<List<FmGrRoleDO>> getRolesByUrl(@RequestBody String  url) {
         try {
             return fmGrRoleService.listByUrl(url);
         } catch (Exception e) {

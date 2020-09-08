@@ -60,7 +60,7 @@ public class FmGrRoleServiceImpl extends BaseServiceAOImpl<FmGrRoleDO, FmGrRoleQ
         List<FmGrActDO> fmGrActDOS = fmGrActDao.queryList(actQueryDO);
         if (CollectionUtils.isEmpty(fmGrActDOS)) {
             log.warn("请求url未配置到action！url={}", url);
-            return null;
+            return CommonResult.successReturn(null);
         }
         List<Long> actionIds = fmGrActDOS.stream().map(fmGrActDO -> fmGrActDO.getActionId()).collect(Collectors.toList());
         FmGrAcbQueryDO acbQueryDO = new FmGrAcbQueryDO();
@@ -68,7 +68,7 @@ public class FmGrRoleServiceImpl extends BaseServiceAOImpl<FmGrRoleDO, FmGrRoleQ
         List<FmGrAcbDO> fmGrAcbDOS = fmGrAcbDao.queryList(acbQueryDO);
         if (CollectionUtils.isEmpty(fmGrAcbDOS)) {
             log.warn("请求url未绑定到按钮！url={}", url);
-            return null;
+            return CommonResult.successReturn(null);
         }
         List<Long> menuIds = fmGrAcbDOS.stream().map(fmGrAcbDO -> fmGrAcbDO.getMenuId()).collect(Collectors.toList());
         List<Long> disMenuIds = menuIds.stream().distinct().collect(Collectors.toList());
@@ -77,7 +77,7 @@ public class FmGrRoleServiceImpl extends BaseServiceAOImpl<FmGrRoleDO, FmGrRoleQ
         List<FmGrRoleMDO> fmGrRoleMDOS = fmGrRoleMDao.queryList(fmGrRoleMQueryDO);
         if (CollectionUtils.isEmpty(fmGrRoleMDOS)) {
             log.warn("请求url绑定菜单未绑定到角色！url={}", url);
-            return null;
+            return CommonResult.successReturn(null);
         }
         List<Long> roleIds = fmGrRoleMDOS.stream().map(fmGrRoleMDO -> fmGrRoleMDO.getRoleId()).collect(Collectors.toList());
         List<Long> disRoleIds = roleIds.stream().distinct().collect(Collectors.toList());
