@@ -1,4 +1,5 @@
 package com.user.web.controller;
+import com.user.client.vo.FmGrUserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ import   com.user.service.base.BaseControllerImpl;
 import   com.user.service.base.BaseServiceAO;
 import   com.user.client.domain.FmGrRoleDO;
 import   com.user.client.query.FmGrRoleQueryDO;
+
+import static com.user.client.base.CommonCode.SYSTEM_ERROR;
 
 /**
  * 角色表
@@ -94,5 +97,22 @@ public class FmGrRoleController extends BaseControllerImpl<FmGrRoleDO, FmGrRoleQ
     @RequestMapping("add")
     public CommonResult<FmGrRoleDO> insert(@RequestBody FmGrRoleDO t) {
         return getService().save(t);
+    }
+
+    /**
+     * 根据url获取包含的角色
+     * @param url
+     * @return
+     */
+    @ApiOperation(value = "根据url获取包含的角色", httpMethod = "GET", notes = "根据url获取包含的角色")
+    @RequestMapping("getRolesByUrl")
+    public CommonResult<List<FmGrRoleDO>> getRolesByUrl(@RequestParam("url") String  url) {
+        try {
+            return baseService.listByUrl(url);
+        } catch (Exception e) {
+            log.error("根据用户名获取用户信息异常，msg={}",e.getMessage());
+            e.printStackTrace();
+        }
+        return CommonResult.errorReturn(SYSTEM_ERROR);
     }
 }

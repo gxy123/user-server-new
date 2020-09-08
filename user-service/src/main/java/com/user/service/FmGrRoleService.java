@@ -1,4 +1,5 @@
 package com.user.service;
+import com.user.client.base.CommonResult;
 import com.user.client.domain.FmGrRoleDO;
 import com.user.client.query.FmGrRoleQueryDO;
 import com.user.service.base.BaseServiceAO;
@@ -15,6 +16,6 @@ import java.util.List;
 public interface FmGrRoleService extends BaseServiceAO<FmGrRoleDO,FmGrRoleQueryDO> {
 
     List<FmGrRoleDO>listByRoleIds(List<Long> roleIds) throws Exception;
-    List<FmGrRoleDO>listByUrl(String url) throws Exception;
+    CommonResult<List<FmGrRoleDO>> listByUrl(String url) throws Exception;
 
 }
