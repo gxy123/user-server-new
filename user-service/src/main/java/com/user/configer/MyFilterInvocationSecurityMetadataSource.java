@@ -4,6 +4,7 @@ import com.user.client.base.CommonResult;
 import com.user.client.domain.FmGrRoleDO;
 import com.user.service.FmGrRoleService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
@@ -14,6 +15,8 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static org.springframework.security.access.AccessDecisionVoter.ACCESS_GRANTED;
 
 /**
  * @author guoxiaoyu
@@ -33,6 +36,14 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
 
         FilterInvocation fi = (FilterInvocation) o;
         String url = fi.getRequestUrl();
+        int i = url.indexOf("?");
+        if(i!=-1){
+            url = url.substring(0,i);
+        }
+
+        if(url.equals("/user/auth/byUserName")||url.equals("/user/auth/getRolesByUrl")){
+          return null;
+        }
         log.info("校验url={}", url);
         List<ConfigAttribute> list = new ArrayList<>();
         try {

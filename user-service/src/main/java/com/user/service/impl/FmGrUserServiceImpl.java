@@ -42,7 +42,7 @@ public class FmGrUserServiceImpl extends BaseServiceAOImpl<FmGrUserDO, FmGrUserQ
         queryDO.setMobile(userName);
         List<FmGrUserDO> fmGrUserDOS = baseDao.queryList(queryDO);
         if(CollectionUtils.isEmpty(fmGrUserDOS)){
-            log.info("根据用户名查询返回结果 为Null,userName={}",userName);
+            log.info("根据用户名查询返回结果 为 Null,userName = {}",userName);
             return CommonResult.successReturn(null);
         }
         FmGrUserVO vo = new FmGrUserVO();

@@ -8,11 +8,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -34,16 +32,20 @@ public class MyAccessDecisionVoter implements AccessDecisionVoter<Object> {
         String url = fi.getRequestUrl();
         log.info("进入权限校验...url={}",url);
         if (CollectionUtils.isEmpty(attributes)) {
-            log.warn("权限校验拒绝！ACCESS_DENIED");
+            log.warn("资源未注册！ACCESS_DENIED");
             return ACCESS_DENIED;
         }
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         List<ConfigAttribute> configAttributeList = (List<ConfigAttribute>) attributes;
         AtomicBoolean disjoint = new AtomicBoolean(false);
+        log.info("用户持有权限：{}", Arrays.toString(authorities.toArray()));
+        StringBuilder grant = new StringBuilder();
+        configAttributeList.forEach(configAttribute -> {
+            grant.append(configAttribute.getAttribute()).append(",");
+        });
+        log.info("资源所需权限：{}",grant.toString() );
         authorities.forEach(grantedAuthority -> {
-            log.info("用户持有权限：{}",grantedAuthority.getAuthority());
             configAttributeList.forEach(configAttribute -> {
-                log.info("资源所需权限：{}",configAttribute.getAttribute());
                 if(grantedAuthority.getAuthority().equals(configAttribute.getAttribute())){
                     disjoint.set(true);
                     return;

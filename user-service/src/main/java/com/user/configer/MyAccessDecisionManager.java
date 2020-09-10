@@ -6,6 +6,7 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.FilterInvocation;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -27,11 +28,20 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
     MyAccessDecisionVoter myAccessDecisionVoter;
     @Override
     public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> collection) throws AccessDeniedException, InsufficientAuthenticationException {
-
-        int vote = myAccessDecisionVoter.vote(authentication, o, collection);
-        if(vote!=ACCESS_GRANTED){
-            throw new AccessDeniedException("无权限访问！");
+        FilterInvocation fi = (FilterInvocation) o;
+        String url = fi.getRequestUrl();
+        int i = url.indexOf("?");
+        if(i!=-1){
+            url = url.substring(0,i);
         }
+
+        if(!url.equals("/user/auth/byUserName")&&!url.equals("/user/auth/getRolesByUrl")){
+            int vote = myAccessDecisionVoter.vote(authentication, o, collection);
+            if(vote!=ACCESS_GRANTED){
+                throw new AccessDeniedException("无权限访问！");
+            }
+        }
+
     }
 
     @Override
