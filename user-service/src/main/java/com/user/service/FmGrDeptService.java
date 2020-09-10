@@ -3,6 +3,8 @@ import com.user.client.domain.FmGrDeptDO;
 import com.user.client.query.FmGrDeptQueryDO;
 import com.user.service.base.BaseServiceAO;
 
+import java.util.List;
+
 /**
  * 
  *
@@ -11,5 +13,5 @@ import com.user.service.base.BaseServiceAO;
  * @date 2020-08-25 11:39:42
  */
 public interface FmGrDeptService extends BaseServiceAO<FmGrDeptDO,FmGrDeptQueryDO> {
-
+    List<FmGrDeptDO> getByUserId(Long userId) throws Exception;
 }

@@ -15,9 +15,9 @@ import java.util.Set;
  * @date 2020/8/31 11:16
  */
 @Data
-public class UserClientVo extends FmGrUserDO {
-    Set<String> authorities;
+public class UserClientVo{
     Set<String> scope;
+    FmGrUserDO fmGrUserDO;
     List<FmGrRoleDO> roleDOS;
     List<FmGrMenuVO> menuVOS;
     List<FmGrDeptDO>fmGrDeptDOS;

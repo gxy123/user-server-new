@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static org.springframework.security.access.AccessDecisionVoter.ACCESS_GRANTED;
 
@@ -36,13 +37,10 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
 
         FilterInvocation fi = (FilterInvocation) o;
         String url = fi.getRequestUrl();
-        int i = url.indexOf("?");
-        if(i!=-1){
-            url = url.substring(0,i);
-        }
-
-        if(url.equals("/user/auth/byUserName")||url.equals("/user/auth/getRolesByUrl")){
-          return null;
+        String reg = "^/api/.*";
+        boolean matches = Pattern.matches(reg, url);
+        if(!matches){
+            return null;
         }
         log.info("校验url={}", url);
         List<ConfigAttribute> list = new ArrayList<>();

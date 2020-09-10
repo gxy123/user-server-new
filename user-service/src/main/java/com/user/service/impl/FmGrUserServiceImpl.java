@@ -1,11 +1,13 @@
 package com.user.service.impl;
 import com.user.client.base.CommonResult;
+import com.user.client.domain.FmGrDeptDO;
 import com.user.client.domain.FmGrRoleDO;
 import com.user.client.domain.FmGrUserDO;
 import com.user.client.domain.FmGrUserRDO;
 import com.user.client.query.FmGrUserQueryDO;
 import com.user.client.vo.FmGrUserVO;
 import com.user.dao.FmGrUserDao;
+import com.user.service.FmGrDeptService;
 import com.user.service.FmGrUserRService;
 import com.user.service.FmGrUserService;
 import com.user.service.base.BaseDAO;
@@ -29,6 +31,8 @@ public class FmGrUserServiceImpl extends BaseServiceAOImpl<FmGrUserDO, FmGrUserQ
     private FmGrUserRService fmGrUserRService;
     @Resource
     private FmGrRoleServiceImpl fmGrRoleService;
+    @Resource
+    private FmGrDeptService fmGrDeptService;
 
 
     @Override
@@ -54,6 +58,10 @@ public class FmGrUserServiceImpl extends BaseServiceAOImpl<FmGrUserDO, FmGrUserQ
             List<FmGrRoleDO> fmGrRoleDOS = fmGrRoleService.listByRoleIds(roleIds);
             vo.setRoleDOS(fmGrRoleDOS);
         }
+        //获取部门
+        List<FmGrDeptDO> deptDOS = fmGrDeptService.getByUserId(userId);
+        vo.setFmGrDeptDOS(deptDOS);
+        //获取菜单
 
         return CommonResult.successReturn(vo);
     }

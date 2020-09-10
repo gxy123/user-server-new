@@ -75,15 +75,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/user/auth/**").permitAll().anyRequest().authenticated().withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+        http.authorizeRequests().withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
             @Override
             public <O extends FilterSecurityInterceptor> O postProcess(O o) {
                 o.setAccessDecisionManager(accessDecisionManager);
                 o.setSecurityMetadataSource(filterInvocationSecurityMetadataSource);
                 return o;
             }
-        })/*.accessDecisionManager(accessDecisionManager())*/;
-
+        }).antMatchers("/user/auth/**").permitAll().anyRequest().authenticated()/*.accessDecisionManager(accessDecisionManager())*/;
     }
    /* @Bean
     public AccessDecisionManager accessDecisionManager() {
