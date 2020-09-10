@@ -21,6 +21,7 @@ public class UserClientVo{
     List<FmGrRoleDO> roleDOS;
     List<FmGrMenuVO> menuVOS;
     List<FmGrDeptDO>fmGrDeptDOS;
+    List<String> permissionList;
     Object jti;
     Long exp;
     String grant_type;
