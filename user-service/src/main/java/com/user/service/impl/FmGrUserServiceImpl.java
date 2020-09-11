@@ -62,10 +62,10 @@ public class FmGrUserServiceImpl extends BaseServiceAOImpl<FmGrUserDO, FmGrUserQ
             List<FmGrRoleDO> fmGrRoleDOS = fmGrRoleService.listByRoleIds(roleIds);
             vo.setRoleDOS(fmGrRoleDOS);
             //获取菜单
-           // List<FmGrMenuVO> grMenuVOS = fmGrMenuService.getByRoleIds(roleIds);
-           // vo.setMenuVOS(grMenuVOS);
-            List<String> permissionByRoleIds = fmGrMenuService.getPermissionByRoleIds(roleIds);
-           // vo.setPermissionList(permissionByRoleIds);
+           List<FmGrMenuVO> grMenuVOS = fmGrMenuService.getByRoleIds(roleIds);
+            vo.setMenuVOS(grMenuVOS);
+             List<String> permissionByRoleIds = fmGrMenuService.getPermissionByRoleIds(roleIds);
+            vo.setPermissionList(permissionByRoleIds);
         }
         //获取部门
         List<FmGrDeptDO> deptDOS = fmGrDeptService.getByUserId(userId);

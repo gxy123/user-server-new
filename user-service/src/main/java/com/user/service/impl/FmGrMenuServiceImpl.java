@@ -76,7 +76,8 @@ public class FmGrMenuServiceImpl extends BaseServiceAOImpl<FmGrMenuDO, FmGrMenuQ
             Long menuId = fmGrMenuDO.getMenuId();
             FmGrMenuVO vo = new FmGrMenuVO();
             BeanUtils.copyProperties(fmGrMenuDO, vo);
-            vo.setBtnVOList( finalMapBtns.get(menuId));
+
+            vo.setBtnVOList(finalMapBtns.get(menuId) );
             fmGrMenuVOS.add(vo);
         });
 

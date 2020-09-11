@@ -30,7 +30,7 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
     @Override
     public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> collection) throws AccessDeniedException, InsufficientAuthenticationException {
         FilterInvocation fi = (FilterInvocation) o;
-        String url = fi.getRequestUrl();
+        String url = fi.getHttpRequest().getServletPath();
         String reg = "^/api/.*";
         boolean matches = Pattern.matches(reg, url);
         if(matches){

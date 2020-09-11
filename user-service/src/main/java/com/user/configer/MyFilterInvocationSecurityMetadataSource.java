@@ -36,7 +36,7 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         //根据url返回所有包含次权限的角色
 
         FilterInvocation fi = (FilterInvocation) o;
-        String url = fi.getRequestUrl();
+        String url = fi.getHttpRequest().getServletPath();
         String reg = "^/api/.*";
         boolean matches = Pattern.matches(reg, url);
         if(!matches){

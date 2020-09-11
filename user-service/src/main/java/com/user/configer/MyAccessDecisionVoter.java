@@ -29,7 +29,7 @@ public class MyAccessDecisionVoter implements AccessDecisionVoter<Object> {
     @Override
     public int vote(Authentication authentication, Object o, Collection<ConfigAttribute> attributes) {
         FilterInvocation fi = (FilterInvocation) o;
-        String url = fi.getRequestUrl();
+        String url = fi.getHttpRequest().getServletPath();
         log.info("进入权限校验...url={}",url);
         if (CollectionUtils.isEmpty(attributes)) {
             log.warn("资源未注册！ACCESS_DENIED");

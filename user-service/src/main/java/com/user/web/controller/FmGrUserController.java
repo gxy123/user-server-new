@@ -110,7 +110,7 @@ public class FmGrUserController extends BaseControllerImpl<FmGrUserDO, FmGrUserQ
      */
     @ApiOperation(value = "根据用户名获取用户信息", httpMethod = "GET", notes = "根据用户名获取用户信息")
     @RequestMapping("byUserName")
-    public CommonResult<FmGrUserVO> detail(@RequestParam("userName") String  userName) {
+    public CommonResult<FmGrUserVO> detail(@RequestParam String  userName) {
         try {
             return baseService.getByUserName(userName);
         } catch (Exception e) {
