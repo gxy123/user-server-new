@@ -14,4 +14,5 @@ public class FmGrUserVO extends FmGrUserDO {
     List<FmGrRoleDO> roleDOS;
     List<FmGrMenuVO> menuVOS;
     List<FmGrDeptDO>fmGrDeptDOS;
+   // List<String> permissionList;
 }

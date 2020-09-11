@@ -27,6 +27,7 @@ public class FmGrAcbQueryDO extends BaseQueryDO implements Serializable {
     private Long actionId;
     @ApiModelProperty("")
     private Long btnId;
+    private List<Long> btnIds;
     @ApiModelProperty("")
     private Long menuId;
     private List<Long> actionIds;

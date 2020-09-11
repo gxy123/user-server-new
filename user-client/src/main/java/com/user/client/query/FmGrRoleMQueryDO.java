@@ -27,6 +27,7 @@ public class FmGrRoleMQueryDO extends BaseQueryDO implements Serializable {
     private Long roleMenuId;
     @ApiModelProperty("")
     private Long roleId;
+    private List<Long> roleIds;
     @ApiModelProperty("")
     private Long menuId;
     @ApiModelProperty("")

@@ -5,9 +5,11 @@ import com.user.client.domain.FmGrRoleDO;
 import com.user.client.domain.FmGrUserDO;
 import com.user.client.domain.FmGrUserRDO;
 import com.user.client.query.FmGrUserQueryDO;
+import com.user.client.vo.FmGrMenuVO;
 import com.user.client.vo.FmGrUserVO;
 import com.user.dao.FmGrUserDao;
 import com.user.service.FmGrDeptService;
+import com.user.service.FmGrMenuService;
 import com.user.service.FmGrUserRService;
 import com.user.service.FmGrUserService;
 import com.user.service.base.BaseDAO;
@@ -33,6 +35,8 @@ public class FmGrUserServiceImpl extends BaseServiceAOImpl<FmGrUserDO, FmGrUserQ
     private FmGrRoleServiceImpl fmGrRoleService;
     @Resource
     private FmGrDeptService fmGrDeptService;
+    @Resource
+    private FmGrMenuService fmGrMenuService;
 
 
     @Override
@@ -57,11 +61,15 @@ public class FmGrUserServiceImpl extends BaseServiceAOImpl<FmGrUserDO, FmGrUserQ
             List<Long> roleIds = fmGrUserRDOS.stream().map(fmGrUserRDO -> fmGrUserRDO.getRoleId()).collect(Collectors.toList());
             List<FmGrRoleDO> fmGrRoleDOS = fmGrRoleService.listByRoleIds(roleIds);
             vo.setRoleDOS(fmGrRoleDOS);
+            //获取菜单
+           // List<FmGrMenuVO> grMenuVOS = fmGrMenuService.getByRoleIds(roleIds);
+           // vo.setMenuVOS(grMenuVOS);
+            List<String> permissionByRoleIds = fmGrMenuService.getPermissionByRoleIds(roleIds);
+           // vo.setPermissionList(permissionByRoleIds);
         }
         //获取部门
         List<FmGrDeptDO> deptDOS = fmGrDeptService.getByUserId(userId);
         vo.setFmGrDeptDOS(deptDOS);
-        //获取菜单
 
         return CommonResult.successReturn(vo);
     }

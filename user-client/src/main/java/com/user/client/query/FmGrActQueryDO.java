@@ -1,6 +1,9 @@
 package com.user.client.query;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 import lombok.Data;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,16 +21,17 @@ import com.user.client.base.BaseQueryDO;
 public class FmGrActQueryDO extends BaseQueryDO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-                    @ApiModelProperty("")
-            private Long id;
-                    @ApiModelProperty("")
-            private Long actionId;
-                    @ApiModelProperty("")
-            private String path;
-                    @ApiModelProperty("")
-            private Integer isPublic;
-                    @ApiModelProperty("")
-            private String name;
-                    @ApiModelProperty("")
-            private String des;
-    }
+    @ApiModelProperty("")
+    private Long id;
+    @ApiModelProperty("")
+    private Long actionId;
+    private List<Long> actionIds;
+    @ApiModelProperty("")
+    private String path;
+    @ApiModelProperty("")
+    private Integer isPublic;
+    @ApiModelProperty("")
+    private String name;
+    @ApiModelProperty("")
+    private String des;
+}
