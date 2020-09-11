@@ -31,6 +31,12 @@
                     #{menuId}
                 </foreach>
             </if>
+            <if test="roleIds != null and roleIds.size() != 0">
+                AND role_id in
+                <foreach collection="roleIds" item="roleId" separator="," open="(" close=")">
+                    #{roleId}
+                </foreach>
+            </if>
         </trim>
     </sql>
 

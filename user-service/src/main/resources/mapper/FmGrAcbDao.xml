@@ -29,6 +29,12 @@
                     #{item}
                 </foreach>
             </if>
+            <if test="btnIds != null and btnIds.size() != 0">
+                AND btn_id in
+                <foreach collection="btnIds" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>
         </trim>
     </sql>
 
