@@ -5,6 +5,7 @@ import com.user.client.query.*;
 import com.user.client.vo.FmGrMenuVO;
 import com.user.dao.*;
 import com.user.service.FmGrMenuService;
+import com.user.service.FmGrRoleService;
 import com.user.service.base.BaseDAO;
 import com.user.service.base.BaseServiceAOImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -43,22 +44,9 @@ public class FmGrMenuServiceImpl extends BaseServiceAOImpl<FmGrMenuDO, FmGrMenuQ
 
     @Override
     public List<FmGrMenuVO> getByRoleIds(List<Long> roleIds) throws Exception {
-        List<FmGrMenuVO> fmGrMenuVOS = new ArrayList<>();
-        FmGrRoleMQueryDO fmGrRoleMQueryDO = new FmGrRoleMQueryDO();
-        fmGrRoleMQueryDO.setRoleIds(roleIds);
-        List<FmGrRoleMDO> fmGrRoleMDOS = fmGrRoleMDao.queryList(fmGrRoleMQueryDO);
-        if (CollectionUtils.isEmpty(fmGrRoleMDOS)) {
-            log.error("未找到角色菜单配置！");
-            return null;
-        }
-        List<Long> menuIds = fmGrRoleMDOS.stream().map(fmGrRoleMDO -> fmGrRoleMDO.getMenuId()).collect(Collectors.toList());
-        FmGrMenuQueryDO fmGrMenuQueryDO = new FmGrMenuQueryDO();
-        fmGrMenuQueryDO.setMenuIds(menuIds);
-        List<FmGrMenuDO> fmGrMenuDOS = baseDao.queryList(fmGrMenuQueryDO);
-        if (CollectionUtils.isEmpty(fmGrMenuDOS)) {
-            log.error("未找到菜单项！");
-            return null;
-        }
+        List<FmGrMenuVO> fmGrMenuVOS =new ArrayList<>();
+        List<FmGrMenuDO> m = getDOByRoleIds(roleIds);
+        List<Long> menuIds = m.stream().map(menuDO -> menuDO.getMenuId()).collect(Collectors.toList());
         FmGrMenuBtnQueryDO fmGrMenuBtnQueryDO = new FmGrMenuBtnQueryDO();
         fmGrMenuBtnQueryDO.setMenuIds(menuIds);
         List<FmGrMenuBtnDO> fmGrMenuBtnDOS = null;
@@ -71,17 +59,31 @@ public class FmGrMenuServiceImpl extends BaseServiceAOImpl<FmGrMenuDO, FmGrMenuQ
         } catch (Exception e) {
             log.error("获取菜单按钮配置异常！");
         }
-        Map<Long, List<FmGrMenuBtnDO>> finalMapBtns = MapBtns;
-        fmGrMenuDOS.forEach(fmGrMenuDO -> {
+        Map<Long, List<FmGrMenuBtnDO>> finalMapBtns = MapBtns;//按钮list
+        m.forEach(fmGrMenuDO -> {
             Long menuId = fmGrMenuDO.getMenuId();
             FmGrMenuVO vo = new FmGrMenuVO();
             BeanUtils.copyProperties(fmGrMenuDO, vo);
-
             vo.setBtnVOList(finalMapBtns.get(menuId) );
             fmGrMenuVOS.add(vo);
         });
-
         return fmGrMenuVOS;
+    }
+
+    @Override
+    public List<FmGrMenuDO> getDOByRoleIds(List<Long> roleIds) throws Exception {
+        FmGrRoleMQueryDO fmGrRoleMQueryDO = new FmGrRoleMQueryDO();
+        fmGrRoleMQueryDO.setRoleIds(roleIds);
+        List<FmGrRoleMDO> fmGrRoleMDOS = fmGrRoleMDao.queryList(fmGrRoleMQueryDO);
+        if (CollectionUtils.isEmpty(fmGrRoleMDOS)) {
+            log.error("未找到角色菜单配置！");
+            return null;
+        }
+        List<Long> menuIds = fmGrRoleMDOS.stream().map(fmGrRoleMDO -> fmGrRoleMDO.getMenuId()).collect(Collectors.toList());
+        FmGrMenuQueryDO fmGrMenuQueryDO = new FmGrMenuQueryDO();
+        fmGrMenuQueryDO.setMenuIds(menuIds);
+        List<FmGrMenuDO> fmGrMenuDOS = baseDao.queryList(fmGrMenuQueryDO);
+       return fmGrMenuDOS;
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.user.client.query.FmGrRoleQueryDO;
 import com.user.service.base.BaseServiceAO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 角色表
@@ -17,5 +18,7 @@ public interface FmGrRoleService extends BaseServiceAO<FmGrRoleDO,FmGrRoleQueryD
 
     List<FmGrRoleDO>listByRoleIds(List<Long> roleIds) throws Exception;
     CommonResult<List<FmGrRoleDO>> listByUrl(String url) throws Exception;
+    List<FmGrRoleDO> listByUserId(Long userId) throws Exception;
+   Map<Long,List<String>> allPath() throws Exception;
 
 }

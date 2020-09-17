@@ -56,10 +56,9 @@ public class FmGrUserServiceImpl extends BaseServiceAOImpl<FmGrUserDO, FmGrUserQ
         FmGrUserVO vo = new FmGrUserVO();
         BeanUtils.copyProperties(fmGrUserDOS.get(0),vo);
         Long userId = vo.getUserId();
-        List<FmGrUserRDO> fmGrUserRDOS = fmGrUserRService.listByUserId(userId);
-        if(!CollectionUtils.isEmpty(fmGrUserRDOS)){
-            List<Long> roleIds = fmGrUserRDOS.stream().map(fmGrUserRDO -> fmGrUserRDO.getRoleId()).collect(Collectors.toList());
-            List<FmGrRoleDO> fmGrRoleDOS = fmGrRoleService.listByRoleIds(roleIds);
+        List<FmGrRoleDO> fmGrRoleDOS = fmGrRoleService.listByUserId(userId);
+        if(!CollectionUtils.isEmpty(fmGrRoleDOS)){
+            List<Long> roleIds = fmGrRoleDOS.stream().map(roleDO -> roleDO.getRoleId()).collect(Collectors.toList());
             vo.setRoleDOS(fmGrRoleDOS);
             //获取菜单
            List<FmGrMenuVO> grMenuVOS = fmGrMenuService.getByRoleIds(roleIds);

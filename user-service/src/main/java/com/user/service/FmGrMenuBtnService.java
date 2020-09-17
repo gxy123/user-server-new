@@ -3,6 +3,8 @@ import com.user.client.domain.FmGrMenuBtnDO;
 import com.user.client.query.FmGrMenuBtnQueryDO;
 import com.user.service.base.BaseServiceAO;
 
+import java.util.List;
+
 /**
  * 
  *
@@ -11,5 +13,5 @@ import com.user.service.base.BaseServiceAO;
  * @date 2020-08-25 11:39:42
  */
 public interface FmGrMenuBtnService extends BaseServiceAO<FmGrMenuBtnDO,FmGrMenuBtnQueryDO> {
-
+    List<FmGrMenuBtnDO>getListByMenuIds(List<Long> ids) throws Exception;
 }

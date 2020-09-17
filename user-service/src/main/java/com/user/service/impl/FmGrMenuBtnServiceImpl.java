@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -23,5 +24,11 @@ public class FmGrMenuBtnServiceImpl extends BaseServiceAOImpl<FmGrMenuBtnDO, FmG
         return baseDao;
     }
 
-
+    @Override
+    public List<FmGrMenuBtnDO> getListByMenuIds(List<Long> ids) throws Exception {
+        FmGrMenuBtnQueryDO queryDO = new FmGrMenuBtnQueryDO();
+        queryDO.setMenuIds(ids);
+        List<FmGrMenuBtnDO> fmGrMenuBtnDOS = baseDao.queryList(queryDO);
+        return fmGrMenuBtnDOS;
+    }
 }

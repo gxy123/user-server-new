@@ -4,6 +4,8 @@ import com.user.client.domain.FmGrActDO;
 import com.user.client.query.FmGrActQueryDO;
 import com.user.service.base.BaseServiceAO;
 
+import java.util.List;
+
 /**
  * 接口
  *
@@ -12,6 +14,8 @@ import com.user.service.base.BaseServiceAO;
  * @date 2020-08-25 11:39:42
  */
 public interface FmGrActService extends BaseServiceAO<FmGrActDO,FmGrActQueryDO> {
+
+    List<FmGrActDO>getListByBtnIds(List<Long> ids) throws Exception;
 
 
 }
