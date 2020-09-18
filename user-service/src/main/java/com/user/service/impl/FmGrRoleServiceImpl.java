@@ -12,6 +12,7 @@ import com.user.service.FmGrRoleService;
 import com.user.service.base.BaseDAO;
 import com.user.service.base.BaseServiceAOImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -36,7 +37,7 @@ public class FmGrRoleServiceImpl extends BaseServiceAOImpl<FmGrRoleDO, FmGrRoleQ
     @Resource
     private FmGrRoleMDao fmGrRoleMDao;
     @Resource
-    private FmGrUserRDao fmGrUserDao;
+    private FmGrUserRDao fmGrUserRDao;
     @Resource
     private FmGrMenuService fmGrMenuService;
     @Resource
@@ -96,7 +97,7 @@ public class FmGrRoleServiceImpl extends BaseServiceAOImpl<FmGrRoleDO, FmGrRoleQ
     public List<FmGrRoleDO> listByUserId(Long userId) throws Exception {
         FmGrUserRQueryDO queryDO = new FmGrUserRQueryDO();
         queryDO.setUserId(userId);
-        List<FmGrUserRDO> fmGrUserRDOS = fmGrUserDao.queryList(queryDO);
+        List<FmGrUserRDO> fmGrUserRDOS = fmGrUserRDao.queryList(queryDO);
         if (!CollectionUtils.isEmpty(fmGrUserRDOS)) {
             List<Long> roleIds = fmGrUserRDOS.stream().map(fmGrUserRDO -> fmGrUserRDO.getRoleId()).collect(Collectors.toList());
             List<FmGrRoleDO> fmGrRoleDOS = listByRoleIds(roleIds);
