@@ -38,14 +38,14 @@
     <select id="queryObject" resultMap="fmGrMenuMap">
         select
         <include refid="base_column_list"/>
-        from fm_gr_menu where id = #{value}
+        from t_menu where id = #{value}
     </select>
 
     <select id="queryList" resultMap="fmGrMenuMap"
             parameterType="com.user.client.query.FmGrMenuQueryDO">
         select
         <include refid="base_column_list"/>
-        from fm_gr_menu
+        from t_menu
         <include refid="base_where"/>
         <if test="firstRow != null">
             limit #{firstRow},#{pageSize}
@@ -53,12 +53,12 @@
     </select>
 
     <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrMenuQueryDO">
-        select count(*) from fm_gr_menu
+        select count(*) from t_menu
         <include refid="base_where"/>
     </select>
 
     <insert id="save" parameterType="com.user.client.domain.FmGrMenuDO"            useGeneratedKeys="true" keyProperty="id">
-        insert into fm_gr_menu
+        insert into t_menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
                                                                             <if test="menuId != null">menu_id,</if>
                                                                 <if test="menuName != null">menu_name,</if>
@@ -81,7 +81,7 @@
                                     </trim>
     </insert>
     <insert id="batchSave" parameterType="com.user.client.domain.FmGrMenuDO"            useGeneratedKeys="true" keyProperty="id">
-        insert into fm_gr_menu
+        insert into t_menu
         (
                                                         menu_id ,                                                menu_name ,                                                url ,                                                icon ,                                                parent_id ,                                                level ,                                                create_time ,                                                update_time                             )
         values
@@ -91,7 +91,7 @@
         </foreach>
     </insert>
     <update id="update" parameterType="com.user.client.domain.FmGrMenuDO">
-        update fm_gr_menu
+        update t_menu
         <set>
                                                                             <if test="menuId != null">
                         `menu_id` = #{menuId},
@@ -122,7 +122,7 @@
     </update>
 
     <delete id="remove">
-		delete from fm_gr_menu where id = #{id}
+		delete from t_menu where id = #{id}
 	</delete>
 
 </mapper>

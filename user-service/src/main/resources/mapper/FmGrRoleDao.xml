@@ -40,14 +40,14 @@
     <select id="queryObject" resultMap="fmGrRoleMap">
         select
         <include refid="base_column_list"/>
-        from fm_gr_role where id = #{value}
+        from t_role where id = #{value}
     </select>
 
     <select id="queryList" resultMap="fmGrRoleMap"
             parameterType="com.user.client.query.FmGrRoleQueryDO">
         select
         <include refid="base_column_list"/>
-        from fm_gr_role
+        from t_role
         <include refid="base_where"/>
         <if test="firstRow != null">
             limit #{firstRow},#{pageSize}
@@ -58,19 +58,19 @@
             parameterType="com.user.client.query.ext.FmGrRoleQueryExt">
         select
         <include refid="base_column_list"/>
-        from fm_gr_role
+        from t_role
         <include refid="base_where"/>
         <if test="firstRow != null">
             limit #{firstRow},#{pageSize}
         </if>
     </select>
     <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrRoleQueryDO">
-        select count(*) from fm_gr_role
+        select count(*) from t_role
         <include refid="base_where"/>
     </select>
 
     <insert id="save" parameterType="com.user.client.domain.FmGrRoleDO" useGeneratedKeys="true" keyProperty="id">
-        insert into fm_gr_role
+        insert into t_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="roleId != null">role_id,</if>
             <if test="roleName != null">role_name,</if>
@@ -89,7 +89,7 @@
         </trim>
     </insert>
     <insert id="batchSave" parameterType="com.user.client.domain.FmGrRoleDO" useGeneratedKeys="true" keyProperty="id">
-        insert into fm_gr_role
+        insert into t_role
         (
         role_id , role_name , icon , des , create_time , update_time )
         values
@@ -99,7 +99,7 @@
         </foreach>
     </insert>
     <update id="update" parameterType="com.user.client.domain.FmGrRoleDO">
-        update fm_gr_role
+        update t_role
         <set>
             <if test="roleId != null">
                 `role_id` = #{roleId},
@@ -124,7 +124,7 @@
     </update>
 
     <delete id="remove">
-		delete from fm_gr_role where id = #{id}
+		delete from t_role where id = #{id}
 	</delete>
 
 </mapper>

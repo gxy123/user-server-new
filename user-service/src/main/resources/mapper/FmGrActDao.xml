@@ -32,14 +32,14 @@
     <select id="queryObject" resultMap="fmGrActMap">
         select
         <include refid="base_column_list"/>
-        from fm_gr_act where id = #{value}
+        from t_action where id = #{value}
     </select>
 
     <select id="queryList" resultMap="fmGrActMap"
             parameterType="com.user.client.query.FmGrActQueryDO">
         select
         <include refid="base_column_list"/>
-        from fm_gr_act
+        from t_action
         <include refid="base_where"/>
         <if test="firstRow != null">
             limit #{firstRow},#{pageSize}
@@ -47,12 +47,12 @@
     </select>
 
     <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrActQueryDO">
-        select count(*) from fm_gr_act
+        select count(*) from t_action
         <include refid="base_where"/>
     </select>
 
     <insert id="save" parameterType="com.user.client.domain.FmGrActDO">
-        insert into fm_gr_act
+        insert into t_action
         <trim prefix="(" suffix=")" suffixOverrides=",">
                                                 <if test="id != null">id,</if>
                                                                 <if test="actionId != null">action_id,</if>
@@ -71,7 +71,7 @@
                                     </trim>
     </insert>
     <insert id="batchSave" parameterType="com.user.client.domain.FmGrActDO">
-        insert into fm_gr_act
+        insert into t_action
         (
                                     id ,                                                action_id ,                                                path ,                                                is_public ,                                                name ,                                                des                             )
         values
@@ -81,7 +81,7 @@
         </foreach>
     </insert>
     <update id="update" parameterType="com.user.client.domain.FmGrActDO">
-        update fm_gr_act
+        update t_action
         <set>
                                                                             <if test="actionId != null">
                         `action_id` = #{actionId},
@@ -103,7 +103,7 @@
     </update>
 
     <delete id="remove">
-		delete from fm_gr_act where id = #{id}
+		delete from t_action where id = #{id}
 	</delete>
 
 </mapper>

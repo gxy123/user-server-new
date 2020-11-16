@@ -34,14 +34,14 @@
     <select id="queryObject" resultMap="fmGrMenuBtnMap">
         select
         <include refid="base_column_list"/>
-        from fm_gr_menu_btn where id = #{value}
+        from t_btn where id = #{value}
     </select>
 
     <select id="queryList" resultMap="fmGrMenuBtnMap"
             parameterType="com.user.client.query.FmGrMenuBtnQueryDO">
         select
         <include refid="base_column_list"/>
-        from fm_gr_menu_btn
+        from t_btn
         <include refid="base_where"/>
         <if test="firstRow != null">
             limit #{firstRow},#{pageSize}
@@ -49,12 +49,12 @@
     </select>
 
     <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrMenuBtnQueryDO">
-        select count(*) from fm_gr_menu_btn
+        select count(*) from t_btn
         <include refid="base_where"/>
     </select>
 
     <insert id="save" parameterType="com.user.client.domain.FmGrMenuBtnDO"            useGeneratedKeys="true" keyProperty="id">
-        insert into fm_gr_menu_btn
+        insert into t_btn
         <trim prefix="(" suffix=")" suffixOverrides=",">
                                                                             <if test="btnId != null">btn_id,</if>
                                                                 <if test="btnName != null">btn_name,</if>
@@ -73,7 +73,7 @@
                                     </trim>
     </insert>
     <insert id="batchSave" parameterType="com.user.client.domain.FmGrMenuBtnDO"            useGeneratedKeys="true" keyProperty="id">
-        insert into fm_gr_menu_btn
+        insert into t_btn
         (
                                                         btn_id ,                                                btn_name ,                                                icon ,                                                menu_id ,                                                create_time ,                                                update_time                             )
         values
@@ -83,7 +83,7 @@
         </foreach>
     </insert>
     <update id="update" parameterType="com.user.client.domain.FmGrMenuBtnDO">
-        update fm_gr_menu_btn
+        update t_btn
         <set>
                                                                             <if test="btnId != null">
                         `btn_id` = #{btnId},
@@ -108,7 +108,7 @@
     </update>
 
     <delete id="remove">
-		delete from fm_gr_menu_btn where id = #{id}
+		delete from t_btn where id = #{id}
 	</delete>
 
 </mapper>

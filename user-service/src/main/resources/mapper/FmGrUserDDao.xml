@@ -30,14 +30,14 @@
     <select id="queryObject" resultMap="fmGrUserDMap">
         select
         <include refid="base_column_list"/>
-        from fm_gr_user_d where id = #{value}
+        from t_user_dept where id = #{value}
     </select>
 
     <select id="queryList" resultMap="fmGrUserDMap"
             parameterType="com.user.client.query.FmGrUserDQueryDO">
         select
         <include refid="base_column_list"/>
-        from fm_gr_user_d
+        from t_user_dept
         <include refid="base_where"/>
         <if test="firstRow != null">
             limit #{firstRow},#{pageSize}
@@ -45,12 +45,12 @@
     </select>
 
     <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrUserDQueryDO">
-        select count(*) from fm_gr_user_d
+        select count(*) from t_user_dept
         <include refid="base_where"/>
     </select>
 
     <insert id="save" parameterType="com.user.client.domain.FmGrUserDDO">
-        insert into fm_gr_user_d
+        insert into t_user_dept
         <trim prefix="(" suffix=")" suffixOverrides=",">
                                                 <if test="id != null">id,</if>
                                                                 <if test="userId != null">user_id,</if>
@@ -67,7 +67,7 @@
                                     </trim>
     </insert>
     <insert id="batchSave" parameterType="com.user.client.domain.FmGrUserDDO">
-        insert into fm_gr_user_d
+        insert into t_user_dept
         (
                                     id ,                                                user_id ,                                                dept_id ,                                                create_time ,                                                update_time                             )
         values
@@ -77,7 +77,7 @@
         </foreach>
     </insert>
     <update id="update" parameterType="com.user.client.domain.FmGrUserDDO">
-        update fm_gr_user_d
+        update t_user_dept
         <set>
                                                                             <if test="userId != null">
                         `user_id` = #{userId},
@@ -96,7 +96,7 @@
     </update>
 
     <delete id="remove">
-		delete from fm_gr_user_d where id = #{id}
+		delete from t_user_dept where id = #{id}
 	</delete>
 
 </mapper>

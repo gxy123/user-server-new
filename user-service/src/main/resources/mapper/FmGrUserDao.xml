@@ -46,14 +46,14 @@
     <select id="queryObject" resultMap="fmGrUserMap">
         select
         <include refid="base_column_list"/>
-        from fm_gr_user where id = #{value}
+        from t_user where id = #{value}
     </select>
 
     <select id="queryList" resultMap="fmGrUserMap"
             parameterType="com.user.client.query.FmGrUserQueryDO">
         select
         <include refid="base_column_list"/>
-        from fm_gr_user
+        from t_user
         <include refid="base_where"/>
         <if test="firstRow != null">
             limit #{firstRow},#{pageSize}
@@ -61,12 +61,12 @@
     </select>
 
     <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrUserQueryDO">
-        select count(*) from fm_gr_user
+        select count(*) from t_user
         <include refid="base_where"/>
     </select>
 
     <insert id="save" parameterType="com.user.client.domain.FmGrUserDO"            useGeneratedKeys="true" keyProperty="id">
-        insert into fm_gr_user
+        insert into t_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
                                                                             <if test="userId != null">user_id,</if>
                                                                 <if test="openId != null">open_id,</if>
@@ -97,7 +97,7 @@
                                     </trim>
     </insert>
     <insert id="batchSave" parameterType="com.user.client.domain.FmGrUserDO"            useGeneratedKeys="true" keyProperty="id">
-        insert into fm_gr_user
+        insert into t_user
         (
                                                         user_id ,                                                open_id ,                                                real_name ,                                                nick_name ,                                                mobile ,                                                pass_word ,                                                header_image ,                                                type ,                                                state ,                                                des ,                                                create_time ,                                                update_time                             )
         values
@@ -107,7 +107,7 @@
         </foreach>
     </insert>
     <update id="update" parameterType="com.user.client.domain.FmGrUserDO">
-        update fm_gr_user
+        update t_user
         <set>
                                                                             <if test="userId != null">
                         `user_id` = #{userId},
@@ -150,7 +150,7 @@
     </update>
 
     <delete id="remove">
-		delete from fm_gr_user where id = #{id}
+		delete from t_user where id = #{id}
 	</delete>
 
 </mapper>

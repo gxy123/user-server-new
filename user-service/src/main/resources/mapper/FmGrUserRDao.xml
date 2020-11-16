@@ -32,14 +32,14 @@
     <select id="queryObject" resultMap="fmGrUserRMap">
         select
         <include refid="base_column_list"/>
-        from fm_gr_user_r where id = #{value}
+        from t_user_role where id = #{value}
     </select>
 
     <select id="queryList" resultMap="fmGrUserRMap"
             parameterType="com.user.client.query.FmGrUserRQueryDO">
         select
         <include refid="base_column_list"/>
-        from fm_gr_user_r
+        from t_user_role
         <include refid="base_where"/>
         <if test="firstRow != null">
             limit #{firstRow},#{pageSize}
@@ -47,12 +47,12 @@
     </select>
 
     <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrUserRQueryDO">
-        select count(*) from fm_gr_user_r
+        select count(*) from t_user_role
         <include refid="base_where"/>
     </select>
 
     <insert id="save" parameterType="com.user.client.domain.FmGrUserRDO">
-        insert into fm_gr_user_r
+        insert into t_user_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
                                                 <if test="id != null">id,</if>
                                                                 <if test="userRoleId != null">user_role_id,</if>
@@ -71,7 +71,7 @@
                                     </trim>
     </insert>
     <insert id="batchSave" parameterType="com.user.client.domain.FmGrUserRDO">
-        insert into fm_gr_user_r
+        insert into t_user_role
         (
                                     id ,                                                user_role_id ,                                                user_id ,                                                role_id ,                                                create_time ,                                                update_time                             )
         values
@@ -81,7 +81,7 @@
         </foreach>
     </insert>
     <update id="update" parameterType="com.user.client.domain.FmGrUserRDO">
-        update fm_gr_user_r
+        update t_user_role
         <set>
                                                                             <if test="userRoleId != null">
                         `user_role_id` = #{userRoleId},
@@ -103,7 +103,7 @@
     </update>
 
     <delete id="remove">
-		delete from fm_gr_user_r where id = #{id}
+		delete from t_user_role where id = #{id}
 	</delete>
 
 </mapper>

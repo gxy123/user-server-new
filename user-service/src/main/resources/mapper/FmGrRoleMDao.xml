@@ -44,14 +44,14 @@
     <select id="queryObject" resultMap="fmGrRoleMMap">
         select
         <include refid="base_column_list"/>
-        from fm_gr_role_m where id = #{value}
+        from t_role_menu where id = #{value}
     </select>
 
     <select id="queryList" resultMap="fmGrRoleMMap"
             parameterType="com.user.client.query.FmGrRoleMQueryDO">
         select
         <include refid="base_column_list"/>
-        from fm_gr_role_m
+        from t_role_menu
         <include refid="base_where"/>
         <if test="firstRow != null">
             limit #{firstRow},#{pageSize}
@@ -59,12 +59,12 @@
     </select>
 
     <select id="queryCount" resultType="int" parameterType="com.user.client.query.FmGrRoleMQueryDO">
-        select count(*) from fm_gr_role_m
+        select count(*) from t_role_menu
         <include refid="base_where"/>
     </select>
 
     <insert id="save" parameterType="com.user.client.domain.FmGrRoleMDO">
-        insert into fm_gr_role_m
+        insert into t_role_menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="roleMenuId != null">role_menu_id,</if>
@@ -83,7 +83,7 @@
         </trim>
     </insert>
     <insert id="batchSave" parameterType="com.user.client.domain.FmGrRoleMDO">
-        insert into fm_gr_role_m
+        insert into t_role_menu
         (
         id , role_menu_id , role_id , menu_id , parent_id , btn_id )
         values
@@ -93,7 +93,7 @@
         </foreach>
     </insert>
     <update id="update" parameterType="com.user.client.domain.FmGrRoleMDO">
-        update fm_gr_role_m
+        update t_role_menu
         <set>
             <if test="roleMenuId != null">
                 `role_menu_id` = #{roleMenuId},
@@ -115,7 +115,7 @@
     </update>
 
     <delete id="remove">
-		delete from fm_gr_role_m where id = #{id}
+		delete from t_role_menu where id = #{id}
 	</delete>
 
 </mapper>
