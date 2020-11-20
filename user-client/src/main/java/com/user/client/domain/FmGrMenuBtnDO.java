@@ -27,7 +27,7 @@ public class FmGrMenuBtnDO extends BaseDO {
     @ApiModelProperty("")
     private String btnName;
     @ApiModelProperty("")
-    private String icon;
+    private String code;
     @ApiModelProperty("")
     private Long menuId;
     @ApiModelProperty("")

@@ -8,14 +8,14 @@
                     <result property="id" column="id"/>
                     <result property="btnId" column="btn_id"/>
                     <result property="btnName" column="btn_name"/>
-                    <result property="icon" column="icon"/>
+                    <result property="code" column="code"/>
                     <result property="menuId" column="menu_id"/>
                     <result property="createTime" column="create_time"/>
                     <result property="updateTime" column="update_time"/>
             </resultMap>
 
     <sql id="base_column_list">
-                id,                btn_id,                btn_name,                icon,                menu_id,                create_time,                update_time        
+                id,                btn_id,                btn_name,                code,                menu_id,                create_time,                update_time        
     </sql>
 
     <sql id="base_where">
@@ -23,7 +23,7 @@
                             <if test="id != null">AND id = #{id}</if>
                             <if test="btnId != null">AND btn_id = #{btnId}</if>
                             <if test="btnName != null">AND btn_name = #{btnName}</if>
-                            <if test="icon != null">AND icon = #{icon}</if>
+                            <if test="code != null">AND code = #{code}</if>
                             <if test="menuId != null">AND menu_id = #{menuId}</if>
                             <if test="createTime != null">AND create_time = #{createTime}</if>
                             <if test="updateTime != null">AND update_time = #{updateTime}</if>
@@ -58,7 +58,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
                                                                             <if test="btnId != null">btn_id,</if>
                                                                 <if test="btnName != null">btn_name,</if>
-                                                                <if test="icon != null">icon,</if>
+                                                                <if test="code != null">code,</if>
                                                                 <if test="menuId != null">menu_id,</if>
                                                                 <if test="createTime != null">create_time,</if>
                                                                 <if test="updateTime != null">update_time,</if>
@@ -66,7 +66,7 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                                                                             <if test="btnId != null">#{btnId},</if>
                                                                 <if test="btnName != null">#{btnName},</if>
-                                                                <if test="icon != null">#{icon},</if>
+                                                                <if test="code != null">#{code},</if>
                                                                 <if test="menuId != null">#{menuId},</if>
                                                                 <if test="createTime != null">#{createTime},</if>
                                                                 <if test="updateTime != null">#{updateTime},</if>
@@ -75,11 +75,11 @@
     <insert id="batchSave" parameterType="com.user.client.domain.FmGrMenuBtnDO"            useGeneratedKeys="true" keyProperty="id">
         insert into t_btn
         (
-                                                        btn_id ,                                                btn_name ,                                                icon ,                                                menu_id ,                                                create_time ,                                                update_time                             )
+                                                        btn_id ,                                                btn_name ,                                                code ,                                                menu_id ,                                                create_time ,                                                update_time                             )
         values
         <foreach collection="list" index="index" separator="," item="item">
             (
-                                                                            #{item.btnId},                                                                #{item.btnName},                                                                #{item.icon},                                                                #{item.menuId},                                                                #{item.createTime},                                                                #{item.updateTime}                                        )
+                                                                            #{item.btnId},                                                                #{item.btnName},                                                                #{item.code},                                                                #{item.menuId},                                                                #{item.createTime},                                                                #{item.updateTime}                                        )
         </foreach>
     </insert>
     <update id="update" parameterType="com.user.client.domain.FmGrMenuBtnDO">
@@ -91,8 +91,8 @@
                                                                 <if test="btnName != null">
                         `btn_name` = #{btnName},
                     </if>
-                                                                <if test="icon != null">
-                        `icon` = #{icon},
+                                                                <if test="code != null">
+                        `code` = #{code},
                     </if>
                                                                 <if test="menuId != null">
                         `menu_id` = #{menuId},

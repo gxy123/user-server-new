@@ -26,7 +26,7 @@ public class FmGrMenuBtnQueryDO extends BaseQueryDO implements Serializable {
     @ApiModelProperty("")
     private String btnName;
     @ApiModelProperty("")
-    private String icon;
+    private String code;
     @ApiModelProperty("")
     private Long menuId;
     private List<Long> menuIds;
