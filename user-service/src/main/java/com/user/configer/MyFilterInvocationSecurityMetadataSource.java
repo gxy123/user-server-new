@@ -4,7 +4,6 @@ import com.user.client.base.CommonResult;
 import com.user.client.domain.FmGrRoleDO;
 import com.user.service.FmGrRoleService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
@@ -16,8 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
-
-import static org.springframework.security.access.AccessDecisionVoter.ACCESS_GRANTED;
 
 /**
  * @author guoxiaoyu
@@ -39,7 +36,8 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         String url = fi.getHttpRequest().getServletPath();
         String reg = "^/api/.*";
         boolean matches = Pattern.matches(reg, url);
-        if(!matches){
+        if (!matches) {
+            log.info("内部请求放行...url={}", url);
             return null;
         }
         log.info("校验url={}", url);
@@ -49,12 +47,6 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
             List<FmGrRoleDO> fmGrRoleDOS = listCommonResult.getResult();
             if (CollectionUtils.isEmpty(fmGrRoleDOS)) {
                 log.error("未匹配到角色！url={}", url);
-                list.add(new ConfigAttribute() {
-                    @Override
-                    public String getAttribute() {
-                        return "null";
-                    }
-                });
                 return list;
             }
             fmGrRoleDOS.forEach(fmGrRoleDO -> {

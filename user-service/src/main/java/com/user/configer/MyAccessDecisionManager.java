@@ -27,23 +27,18 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 
     @Resource
     MyAccessDecisionVoter myAccessDecisionVoter;
+
     @Override
     public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> collection) throws AccessDeniedException, InsufficientAuthenticationException {
-        FilterInvocation fi = (FilterInvocation) o;
-        String url = fi.getHttpRequest().getServletPath();
-        String reg = "^/api/.*";
-        boolean matches = Pattern.matches(reg, url);
-        if(matches){
-            int vote = myAccessDecisionVoter.vote(authentication, o, collection);
-            if(vote!=ACCESS_GRANTED){
-                throw new AccessDeniedException("无权限访问！");
-            }
+        int vote = myAccessDecisionVoter.vote(authentication, o, collection);
+        if (vote != ACCESS_GRANTED) {
+            throw new AccessDeniedException("无权限访问！");
         }
-
     }
 
     @Override
-    public boolean supports(ConfigAttribute configAttribute){return Objects.nonNull(configAttribute.getAttribute());
+    public boolean supports(ConfigAttribute configAttribute) {
+        return Objects.nonNull(configAttribute.getAttribute());
     }
 
     @Override

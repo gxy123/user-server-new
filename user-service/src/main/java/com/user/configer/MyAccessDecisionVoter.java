@@ -30,7 +30,7 @@ public class MyAccessDecisionVoter implements AccessDecisionVoter<Object> {
     public int vote(Authentication authentication, Object o, Collection<ConfigAttribute> attributes) {
         FilterInvocation fi = (FilterInvocation) o;
         String url = fi.getHttpRequest().getServletPath();
-        log.info("进入权限校验...url={}",url);
+        log.info("进入权限校验...url={}", url);
         if (CollectionUtils.isEmpty(attributes)) {
             log.warn("资源未注册！ACCESS_DENIED");
             return ACCESS_DENIED;
@@ -43,16 +43,16 @@ public class MyAccessDecisionVoter implements AccessDecisionVoter<Object> {
         configAttributeList.forEach(configAttribute -> {
             grant.append(configAttribute.getAttribute()).append(",");
         });
-        log.info("资源所需权限：{}",grant.toString() );
+        log.info("资源所需权限：{}", grant.toString());
         authorities.forEach(grantedAuthority -> {
             configAttributeList.forEach(configAttribute -> {
-                if(grantedAuthority.getAuthority().equals(configAttribute.getAttribute())){
+                if (grantedAuthority.getAuthority().equals(configAttribute.getAttribute())) {
                     disjoint.set(true);
                     return;
                 }
             });
         });
-        if(disjoint.get()){
+        if (disjoint.get()) {
             log.info("权限校验通过！ACCESS_GRANTED");
             return ACCESS_GRANTED;
         }

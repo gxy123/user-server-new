@@ -1,22 +1,24 @@
 package com.user.web.controller;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import   com.user.client.base.CommonResult;
-import   com.user.service.FmGrDeptService;
-import   com.user.service.base.BaseControllerImpl;
-import   com.user.service.base.BaseServiceAO;
-import   com.user.client.domain.FmGrDeptDO;
-import   com.user.client.query.FmGrDeptQueryDO;
+
+import com.user.client.base.CommonResult;
+import com.user.service.FmGrDeptService;
+import com.user.service.base.BaseControllerImpl;
+import com.user.service.base.BaseServiceAO;
+import com.user.client.domain.FmGrDeptDO;
+import com.user.client.query.FmGrDeptQueryDO;
 
 /**
- * 
- *
  * @author guoxiaoyu
  * @email ggg_xiaoyu@163.com
  * @date 2020-08-25 11:39:42
@@ -37,7 +39,7 @@ public class FmGrDeptController extends BaseControllerImpl<FmGrDeptDO, FmGrDeptQ
     /**
      * 通用查询逻辑
      *
-     * @param q        查询对象
+     * @param q 查询对象
      * @return
      */
     @ApiOperation(value = "通用查询逻辑", httpMethod = "GET", notes = "通用查询逻辑")
