@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface FmGrMenuService extends BaseServiceAO<FmGrMenuDO,FmGrMenuQueryDO> {
 
-    List<FmGrMenuVO>getByRoleIds(List<Long>roleIds) throws Exception;
+    List<FmGrMenuDO>getByRoleIds(List<Long>roleIds) throws Exception;
     List<FmGrMenuDO>getDOByRoleIds(List<Long>roleIds) throws Exception;
     List<String>getPermissionByRoleIds(List<Long>roleIds) throws Exception;
 

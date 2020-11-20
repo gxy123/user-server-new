@@ -43,10 +43,10 @@ public class FmGrMenuServiceImpl extends BaseServiceAOImpl<FmGrMenuDO, FmGrMenuQ
     }
 
     @Override
-    public List<FmGrMenuVO> getByRoleIds(List<Long> roleIds) throws Exception {
+    public List<FmGrMenuDO> getByRoleIds(List<Long> roleIds) throws Exception {
         List<FmGrMenuVO> fmGrMenuVOS =new ArrayList<>();
         List<FmGrMenuDO> m = getDOByRoleIds(roleIds);
-        List<Long> menuIds = m.stream().map(menuDO -> menuDO.getMenuId()).collect(Collectors.toList());
+       /* List<Long> menuIds = m.stream().map(menuDO -> menuDO.getMenuId()).collect(Collectors.toList());
         FmGrMenuBtnQueryDO fmGrMenuBtnQueryDO = new FmGrMenuBtnQueryDO();
         fmGrMenuBtnQueryDO.setMenuIds(menuIds);
         List<FmGrMenuBtnDO> fmGrMenuBtnDOS = null;
@@ -66,8 +66,8 @@ public class FmGrMenuServiceImpl extends BaseServiceAOImpl<FmGrMenuDO, FmGrMenuQ
             BeanUtils.copyProperties(fmGrMenuDO, vo);
             vo.setBtnVOList(finalMapBtns.get(menuId) );
             fmGrMenuVOS.add(vo);
-        });
-        return fmGrMenuVOS;
+        });*/
+        return m;
     }
 
     @Override
