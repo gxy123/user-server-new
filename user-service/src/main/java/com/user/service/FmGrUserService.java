@@ -3,6 +3,7 @@ import com.user.client.base.CommonResult;
 import com.user.client.domain.FmGrUserDO;
 import com.user.client.query.FmGrUserQueryDO;
 import com.user.client.vo.FmGrUserVO;
+import com.user.client.vo.PermissionVo;
 import com.user.service.base.BaseServiceAO;
 
 /**
@@ -14,5 +15,6 @@ import com.user.service.base.BaseServiceAO;
  */
 public interface FmGrUserService extends BaseServiceAO<FmGrUserDO,FmGrUserQueryDO> {
     CommonResult<FmGrUserVO> getByUserName(String userName) throws Exception;
+    CommonResult<PermissionVo> getByUserId(Long userId) throws Exception;
 
 }

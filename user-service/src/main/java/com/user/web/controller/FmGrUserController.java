@@ -5,6 +5,7 @@ import com.user.client.domain.FmGrRoleDO;
 import com.user.client.domain.FmGrUserDO;
 import com.user.client.query.FmGrUserQueryDO;
 import com.user.client.vo.FmGrUserVO;
+import com.user.client.vo.PermissionVo;
 import com.user.service.FmGrRoleService;
 import com.user.service.FmGrUserService;
 import com.user.service.base.BaseControllerImpl;
@@ -131,6 +132,18 @@ public class FmGrUserController extends BaseControllerImpl<FmGrUserDO, FmGrUserQ
     public CommonResult<List<FmGrRoleDO>> getRolesByUrl(@RequestParam String url) {
         try {
             return fmGrRoleService.listByUrl(url);
+        } catch (Exception e) {
+            log.error("根据用户名获取用户信息异常，msg={}", e.getMessage());
+            e.printStackTrace();
+        }
+        return CommonResult.errorReturn(SYSTEM_ERROR);
+    }
+
+    @ApiOperation(value = "根据url获取包含的角色", httpMethod = "GET", notes = "根据url获取包含的角色")
+    @RequestMapping("getPermissionByUserId")
+    public CommonResult<PermissionVo> getPermissionListByUserId(@RequestParam Long userId) {
+        try {
+            return baseService.getByUserId(userId);
         } catch (Exception e) {
             log.error("根据用户名获取用户信息异常，msg={}", e.getMessage());
             e.printStackTrace();

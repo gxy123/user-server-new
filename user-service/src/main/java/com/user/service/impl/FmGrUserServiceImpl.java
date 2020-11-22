@@ -2,8 +2,8 @@ package com.user.service.impl;
 import com.user.client.base.CommonResult;
 import com.user.client.domain.*;
 import com.user.client.query.FmGrUserQueryDO;
-import com.user.client.vo.FmGrMenuVO;
 import com.user.client.vo.FmGrUserVO;
+import com.user.client.vo.PermissionVo;
 import com.user.dao.FmGrUserDao;
 import com.user.service.FmGrDeptService;
 import com.user.service.FmGrMenuService;
@@ -13,6 +13,7 @@ import com.user.service.base.BaseDAO;
 import com.user.service.base.BaseServiceAOImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -68,5 +69,13 @@ public class FmGrUserServiceImpl extends BaseServiceAOImpl<FmGrUserDO, FmGrUserQ
         vo.setFmGrDeptDOS(deptDOS);
 
         return CommonResult.successReturn(vo);
+    }
+
+    @Override
+    public CommonResult<PermissionVo> getByUserId(Long userId) throws Exception {
+        List<FmGrRoleDO> fmGrRoleDOS = fmGrRoleService.listByUserId(userId);
+        List<Long> roleIds = fmGrRoleDOS.stream().map(roleDO -> roleDO.getRoleId()).collect(Collectors.toList());
+        PermissionVo permissionByRoleIds = fmGrMenuService.getPermissionByRoleIds(roleIds);
+        return CommonResult.successReturn(permissionByRoleIds);
     }
 }

@@ -1,7 +1,7 @@
 package com.user.service;
 import com.user.client.domain.FmGrMenuDO;
 import com.user.client.query.FmGrMenuQueryDO;
-import com.user.client.vo.FmGrMenuVO;
+import com.user.client.vo.PermissionVo;
 import com.user.service.base.BaseServiceAO;
 
 import java.util.List;
@@ -17,6 +17,6 @@ public interface FmGrMenuService extends BaseServiceAO<FmGrMenuDO,FmGrMenuQueryD
 
     List<FmGrMenuDO>getByRoleIds(List<Long>roleIds) throws Exception;
     List<FmGrMenuDO>getDOByRoleIds(List<Long>roleIds) throws Exception;
-    List<String>getPermissionByRoleIds(List<Long>roleIds) throws Exception;
+    PermissionVo getPermissionByRoleIds(List<Long>roleIds) throws Exception;
 
 }
