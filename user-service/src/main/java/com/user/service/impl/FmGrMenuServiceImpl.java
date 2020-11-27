@@ -86,7 +86,6 @@ public class FmGrMenuServiceImpl extends BaseServiceAOImpl<FmGrMenuDO, FmGrMenuQ
     @Override
     public PermissionVo getPermissionByRoleIds(List<Long> roleIds) throws Exception {
         PermissionVo permissionVo = new PermissionVo();
-        List<String> permissionList =new ArrayList<>();
         FmGrRoleMQueryDO fmGrRoleMQueryDO = new FmGrRoleMQueryDO();
         fmGrRoleMQueryDO.setRoleIds(roleIds);
         List<FmGrRoleMDO> fmGrRoleMDOS = fmGrRoleMDao.queryList(fmGrRoleMQueryDO);

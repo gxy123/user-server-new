@@ -21,6 +21,12 @@
         <trim prefix="where" prefixOverrides="and|or">
                             <if test="id != null">AND id = #{id}</if>
                             <if test="actionId != null">AND action_id = #{actionId}</if>
+                            <if test="actionIds != null and actionIds.size() != 0">
+                                AND action_id in
+                                <foreach collection="actionIds" item="item" separator="," open="(" close=")">
+                                    #{item}
+                                </foreach>
+                            </if>
                             <if test="path != null">AND path = #{path}</if>
                             <if test="isPublic != null">AND is_public = #{isPublic}</if>
                             <if test="name != null">AND name = #{name}</if>
